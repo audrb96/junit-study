@@ -8,17 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.bank.config.dummy.DummyObject;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.user.UserReqDto.JoinReqDto;
 
+import javax.persistence.EntityManager;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Transactional
+@Sql("classpath:db/teardown.sql")
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 public class UserControllerTest extends DummyObject {
@@ -31,9 +35,13 @@ public class UserControllerTest extends DummyObject {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    private EntityManager em;
+
     @BeforeEach
     public void setUp() {
         dataSetting();
+        em.clear();
     }
 
 

@@ -37,6 +37,7 @@ public class DummyObject {
 
     protected Account newAccount(Long number, User user) {
         return Account.builder()
+                .balance(1000L)
                 .number(number)
                 .password(1234L)
                 .user(user)

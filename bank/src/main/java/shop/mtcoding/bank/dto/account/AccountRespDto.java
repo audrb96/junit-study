@@ -1,5 +1,6 @@
 package shop.mtcoding.bank.dto.account;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import shop.mtcoding.bank.domain.account.Account;
@@ -36,7 +37,10 @@ public class AccountRespDto {
             this.accounts = accounts.stream().map((AccountDto::new)).collect(Collectors.toList());
         }
 
-        public class AccountDto {
+        @Getter
+        @Setter
+        @EqualsAndHashCode
+        public static class AccountDto {
             private Long id;
             private Long number;
             private Long balance;
